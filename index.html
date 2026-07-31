@@ -1,361 +1,376 @@
-!DOCTYPE html
-html lang=es
-head
-  meta charset=UTF-8
-  meta name=viewport content=width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no
-  titleAuditoría Cristitle
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Auditoría Cris</title>
   
-  meta name=mobile-web-app-capable content=yes
-  meta name=theme-color content=#4f46e5
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#4f46e5">
   
-  link rel=stylesheet href=httpscdn.jsdelivr.netnpm@tablericons-webfont@latesttabler-icons.min.css
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
   
-  style
-     { box-sizing border-box; margin 0; padding 0; -webkit-tap-highlight-color transparent; }
-    body { background #f4f6f8; color #1e293b; font-family system-ui, -apple-system, sans-serif; padding 12px; }
-    .app { max-width 500px; margin 0 auto; display none; }
-    .app.active { display block; }
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    body { background: #f4f6f8; color: #1e293b; font-family: system-ui, -apple-system, sans-serif; padding: 12px; }
+    .app { max-width: 500px; margin: 0 auto; display: none; }
+    .app.active { display: block; }
     
-     Pantalla de Inicio de Sesión Obligatoria 
-    .login-screen { max-width 400px; margin 60px auto 0 auto; background #fff; padding 24px; border-radius 16px; border 1px solid #e2e8f0; box-shadow 0 10px 15px -3px rgba(0,0,0,0.05); text-align center; }
-    .login-screen .logo-icon { font-size 48px; color #4f46e5; margin-bottom 12px; display inline-block; }
-    .login-screen h2 { font-size 20px; font-weight 700; color #0f172a; margin-bottom 6px; }
-    .login-screen p { font-size 13px; color #64748b; margin-bottom 20px; }
+    /* Pantalla de Inicio de Sesión Obligatoria */
+    .login-screen { max-width: 400px; margin: 60px auto 0 auto; background: #fff; padding: 24px; border-radius: 16px; border: 1px solid #e2e8f0; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); text-align: center; }
+    .login-screen .logo-icon { font-size: 48px; color: #4f46e5; margin-bottom: 12px; display: inline-block; }
+    .login-screen h2 { font-size: 20px; font-weight: 700; color: #0f172a; margin-bottom: 6px; }
+    .login-screen p { font-size: 13px; color: #64748b; margin-bottom: 20px; }
     
-    .topbar { display flex; align-items center; justify-content space-between; margin-bottom 12px; flex-direction column; gap 8px; }
-    .title { font-size 18px; font-weight 600; color #0f172a; display flex; align-items center; gap 6px; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-direction: column; gap: 8px; }
+    .title { font-size: 18px; font-weight: 600; color: #0f172a; display: flex; align-items: center; gap: 6px; }
     
-    .tabs { display flex; gap 4px; background #e2e8f0; border-radius 8px; padding 4px; width 100%; }
-    .tab { flex 1; padding 10px 4px; font-size 12px; border none; background none; border-radius 6px; color #64748b; font-weight 500; text-align center; }
-    .tab.active { background #fff; color #0f172a; box-shadow 0 1px 3px rgba(0,0,0,0.1); font-weight 600; }
+    .tabs { display: flex; gap: 4px; background: #e2e8f0; border-radius: 8px; padding: 4px; width: 100%; }
+    .tab { flex: 1; padding: 10px 4px; font-size: 12px; border: none; background: none; border-radius: 6px; color: #64748b; font-weight: 500; text-align: center; }
+    .tab.active { background: #fff; color: #0f172a; box-shadow: 0 1px 3px rgba(0,0,0,0.1); font-weight: 600; }
     
-    .stats { display grid; grid-template-columns repeat(4, 1fr); gap 6px; margin-bottom 8px; }
-    .stat { background #fff; border-radius 8px; padding 8px 4px; border 1px solid #e2e8f0; text-align center; }
-    .stat-label { font-size 10px; color #64748b; font-weight 500; text-transform uppercase; }
-    .stat-val { font-size 16px; font-weight 700; color #0f172a; }
-    .stat-val.success { color #16a34a; }
-    .stat-val.warn { color #2563eb; }
-    .stat-val.danger { color #dc2626; }
+    .top-filters { width: 100%; margin-bottom: 12px; }
+    .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-bottom: 12px; }
+    .stat { background: #fff; border-radius: 14px; display:flex; flex-direction:column; justify-content:center; align-items:center; border: 1px solid #e2e8f0; min-height: 72px; cursor: pointer; transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease, border-color .18s ease, color .18s ease; padding: 10px 8px; font-size: 12px; text-align:center; }
+    .stat:hover { transform: translateY(-1px); box-shadow: 0 8px 16px rgba(15,23,42,.06); }
+    .stat:active { transform: translateY(0) scale(.99); }
+    .stat:focus-visible { outline: 2px solid rgba(79,70,229,.14); outline-offset: 2px; }
+    .stat.active { color: #fff; border-color: transparent; box-shadow: 0 10px 20px rgba(15,23,42,.10); }
+    /* Colores por botón (no seleccionado) */
+    #fg-total { background: #fff; border-color: #9ca3af; color: #475569; }
+    #fg-counted { background: #fff; border-color: #2563eb; color: #2563eb; }
+    #fg-notcounted { background: #fff; border-color: #f97316; color: #f97316; }
+    /* Resultado */
+    #sg-equal { background: #fff; border-color: #16a34a; color: #16a34a; }
+    #sg-low { background: #fff; border-color: #f59e0b; color: #f59e0b; }
+    #sg-out { background: #fff; border-color: #ef4444; color: #ef4444; }
+    /* Colores por botón (activo) */
+    #fg-total.active { background: #475569; }
+    #fg-counted.active { background: #2563eb; }
+    #fg-notcounted.active { background: #f97316; }
+    #sg-equal.active { background: #16a34a; }
+    #sg-low.active { background: #f59e0b; }
+    #sg-out.active { background: #ef4444; }
+    .stat-label { font-size: 10px; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .stat-val { font-size: 18px; font-weight: 800; color: inherit; line-height: 1.1; }
+    .stat-val.success { color: #16a34a; }
+    .stat-val.warn { color: #2563eb; }
+    .stat-val.danger { color: #ef4444; }
 
-     CONTENEDOR DE LA BARRA DE PORCENTAJE 
-    .progress-container { background #fff; border 1px solid #e2e8f0; border-radius 10px; padding 10px; margin-bottom 12px; }
-    .progress-info { display flex; justify-content space-between; font-size 11px; font-weight 700; color #475569; margin-bottom 6px; text-transform uppercase; }
-    .progress-bar-bg { background #e2e8f0; height 12px; border-radius 999px; overflow hidden; width 100%; position relative; }
-    .progress-bar-fill { background linear-gradient(90deg, #10b981, #059669); height 100%; width 0%; transition width 0.4s ease-out; border-radius 999px; }
+    @media (max-width: 720px) {
+      .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 520px) {
+      .stats { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .stat { min-height: 86px; padding: 12px 10px; }
+      .stat-label { font-size: 9px; }
+      .stat-val { font-size: 16px; }
+    }
+
+    .toolbar { display: flex; gap: 10px; margin-bottom: 12px; flex-direction: column; background: #fff; padding: 12px; border-radius: 12px; border: 1px solid #e2e8f0; }
+    .toolbar input[type=text] { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; outline: none; }
+    .btn-group { display: flex; gap: 6px; width: 100%; }
     
-    .toolbar { display flex; gap 10px; margin-bottom 12px; flex-direction column; background #fff; padding 12px; border-radius 12px; border 1px solid #e2e8f0; }
-    .toolbar input[type=text] { width 100%; padding 10px; border 1px solid #cbd5e1; border-radius 8px; font-size 14px; outline none; }
-    .btn-group { display flex; gap 6px; width 100%; }
+    .filter-row { display: flex; flex-direction: column; gap: 4px; border-top: 1px dashed #e2e8f0; padding-top: 6px; }
+    .filter-label { font-size: 10px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; }
+    .filter-buttons { display: flex; gap: 4px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; }
+    .filter-buttons::-webkit-scrollbar { display: none; }
     
-    .filter-row { display flex; flex-direction column; gap 4px; border-top 1px dashed #e2e8f0; padding-top 6px; }
-    .filter-label { font-size 10px; font-weight 700; color #64748b; text-transform uppercase; letter-spacing 0.5px; }
-    .filter-buttons { display flex; gap 4px; overflow-x auto; padding-bottom 2px; scrollbar-width none; }
-    .filter-buttons-webkit-scrollbar { display none; }
+    .f-btn { background: #f1f5f9; border: 1px solid #e2e8f0; padding: 6px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; color: #475569; white-space: nowrap; cursor: pointer; }
+    .f-btn.active { background: #4f46e5; color: #fff; border-color: #4f46e5; }
+    .f-btn.active.f-ok { background: #16a34a; border-color: #16a34a; }
+    .f-btn.active.f-sob { background: #2563eb; border-color: #2563eb; }
+    .f-btn.active.f-fal { background: #dc2626; border-color: #dc2626; }
+
+    .btn { flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 4px; padding: 12px; font-size: 13px; font-weight: 600; border-radius: 8px; border: 1px solid transparent; cursor: pointer; }
+    .btn-primary { background: #4f46e5; color: #fff; }
+    .btn-scan { background: #10b981; color: #fff; }
+    .btn-danger { background: #ef4444; color: #fff; }
+    .btn-secondary { background: #fff; border-color: #cbd5e1; color: #475569; }
+    .btn-excel { background: #15803d; color: #fff; width: 100%; padding: 14px; font-size: 14px; margin-bottom: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+
+    .location-toggle { display: flex; background: #f1f5f9; padding: 4px; border-radius: 8px; margin-bottom: 12px; border: 1px solid #cbd5e1; }
+    .loc-btn { flex: 1; padding: 10px 4px; border: none; background: none; border-radius: 6px; font-weight: 600; font-size: 12px; color: #64748b; display: flex; align-items: center; justify-content: center; gap: 4px; }
+    .loc-btn.active { background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.08); }
+    .loc-btn.active.percha { color: #4f46e5; }
+    .loc-btn.active.bodega { color: #ea580c; }
+
+    .tbl-wrap { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; overflow: hidden; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th { text-align: left; padding: 8px 10px; font-weight: 600; font-size: 11px; color: #64748b; border-bottom: 1px solid #e2e8f0; background: #f8fafc; }
+    td { padding: 10px; border-bottom: 1px solid #e2e8f0; color: #334155; vertical-align: middle; }
     
-    .f-btn { background #f1f5f9; border 1px solid #e2e8f0; padding 6px 10px; border-radius 6px; font-size 11px; font-weight 600; color #475569; white-space nowrap; cursor pointer; }
-    .f-btn.active { background #4f46e5; color #fff; border-color #4f46e5; }
-    .f-btn.active.f-ok { background #16a34a; border-color #16a34a; }
-    .f-btn.active.f-sob { background #2563eb; border-color #2563eb; }
-    .f-btn.active.f-fal { background #dc2626; border-color #dc2626; }
-
-    .btn { flex 1; display inline-flex; align-items center; justify-content center; gap 4px; padding 12px; font-size 13px; font-weight 600; border-radius 8px; border 1px solid transparent; cursor pointer; }
-    .btn-primary { background #4f46e5; color #fff; }
-    .btn-scan { background #10b981; color #fff; }
-    .btn-danger { background #ef4444; color #fff; }
-    .btn-secondary { background #fff; border-color #cbd5e1; color #475569; }
-    .btn-excel { background #15803d; color #fff; width 100%; padding 14px; font-size 14px; margin-bottom 14px; box-shadow 0 2px 4px rgba(0,0,0,0.1); }
-
-    .location-toggle { display flex; background #f1f5f9; padding 4px; border-radius 8px; margin-bottom 12px; border 1px solid #cbd5e1; }
-    .loc-btn { flex 1; padding 10px 4px; border none; background none; border-radius 6px; font-weight 600; font-size 12px; color #64748b; display flex; align-items center; justify-content center; gap 4px; }
-    .loc-btn.active { background #fff; box-shadow 0 2px 4px rgba(0,0,0,0.08); }
-    .loc-btn.active.percha { color #4f46e5; }
-    .loc-btn.active.bodega { color #ea580c; }
-
-    .tbl-wrap { background #fff; border 1px solid #e2e8f0; border-radius 10px; overflow hidden; }
-    table { width 100%; border-collapse collapse; font-size 14px; }
-    th { text-align left; padding 8px 10px; font-weight 600; font-size 11px; color #64748b; border-bottom 1px solid #e2e8f0; background #f8fafc; }
-    td { padding 10px; border-bottom 1px solid #e2e8f0; color #334155; vertical-align middle; }
+    .sub-units { font-size: 11px; color: #64748b; display: block; margin-top: 1px; }
+    .badge { display: inline-block; padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; text-transform: uppercase; text-align: center; white-space: nowrap; }
+    .badge-sob { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+    .badge-fal { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
+    .badge-ok { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
     
-    .sub-units { font-size 11px; color #64748b; display block; margin-top 1px; }
-    .badge { display inline-block; padding 4px 8px; border-radius 6px; font-size 11px; font-weight 700; text-transform uppercase; text-align center; white-space nowrap; }
-    .badge-sob { background #e0f2fe; color #0369a1; border 1px solid #bae6fd; }
-    .badge-fal { background #fee2e2; color #b91c1c; border 1px solid #fca5a5; }
-    .badge-ok { background #dcfce7; color #15803d; border 1px solid #bbf7d0; }
+    .alert-card { background: #fff; padding: 12px; border-radius: 10px; border: 1px solid #e2e8f0; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; gap: 10px; cursor: pointer; }
     
-    .alert-card { background #fff; padding 12px; border-radius 10px; border 1px solid #e2e8f0; margin-bottom 8px; display flex; align-items center; justify-content space-between; gap 10px; cursor pointer; }
-    
-    .section { display none; } .section.active { display block; }
-    .empty { text-align center; padding 2rem 1rem; color #64748b; font-size 13px; }
+    .section { display: none; } .section.active { display: block; }
+    .empty { text-align: center; padding: 2rem 1rem; color: #64748b; font-size: 13px; }
 
-     Modales 
-    .modal-bg { position fixed; inset 0; background rgba(15,23,42,0.6); z-index 8000; display flex; align-items center; justify-content center; backdrop-filter blur(4px); padding 12px; }
-    .modal { background #fff; border-radius 14px; padding 16px; width 100%; max-width 360px; box-shadow 0 20px 25px -5px rgba(0,0,0,0.15); }
-    .modal h3 { font-size 15px; font-weight 600; margin-bottom 12px; color #0f172a; text-align center; }
-    .field { margin-bottom 8px; }
-    .field label { display block; font-size 11px; color #64748b; font-weight 500; margin-bottom 2px; }
-    .field input { width 100%; padding 10px; border 1px solid #cbd5e1; border-radius 8px; outline none; font-size 14px; }
-    .field inputdisabled { background #f1f5f9; color #64748b; }
-    .modal-btns { display flex; gap 8px; margin-top 14px; }
+    /* Modales */
+    .modal-bg { position: fixed; inset: 0; background: rgba(15,23,42,0.6); z-index: 8000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); padding: 12px; }
+    .modal { background: #fff; border-radius: 14px; padding: 16px; width: 100%; max-width: 360px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.15); }
+    .modal h3 { font-size: 15px; font-weight: 600; margin-bottom: 12px; color: #0f172a; text-align: center; }
+    .field { margin-bottom: 8px; }
+    .field label { display: block; font-size: 11px; color: #64748b; font-weight: 500; margin-bottom: 2px; }
+    .field input { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; outline: none; font-size: 14px; }
+    .field input:disabled { background: #f1f5f9; color: #64748b; }
+    .modal-btns { display: flex; gap: 8px; margin-top: 14px; }
 
-     Escáner 
-    .scanner-modal { position fixed; inset 0; background #000; z-index 9999; display flex; flex-direction column; align-items center; justify-content space-between; padding 30px 20px; }
-    .scanner-box { position relative; width 100%; max-width 320px; aspect-ratio 11; background #000; border-radius 16px; overflow hidden; }
-    #scan-video { width 100%; height 100%; object-fit cover; }
-    .scan-overlay { position absolute; inset 0; display flex; align-items center; justify-content center; pointer-events none; }
-    .scan-frame { width 85%; aspect-ratio 2.31; border 2px solid #10b981; border-radius 8px; position relative; box-shadow 0 0 0 9999px rgba(0,0,0,0.6); }
-    .scan-line { position absolute; left 0; right 0; height 3px; background #10b981; animation scanline 1.8s linear infinite; }
-    @keyframes scanline { 0% { top 0% } 50% { top 100% } 100% { top 0% } }
+    /* Escáner */
+    .scanner-modal { position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 30px 20px; }
+    .scanner-box { position: relative; width: 100%; max-width: 320px; aspect-ratio: 1/1; background: #000; border-radius: 16px; overflow: hidden; }
+    #scan-video { width: 100%; height: 100%; object-fit: cover; }
+    .scan-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+    .scan-frame { width: 85%; aspect-ratio: 2.3/1; border: 2px solid #10b981; border-radius: 8px; position: relative; box-shadow: 0 0 0 9999px rgba(0,0,0,0.6); }
+    .scan-line { position: absolute; left: 0; right: 0; height: 3px; background: #10b981; animation: scanline 1.8s linear infinite; }
+    @keyframes scanline { 0% { top: 0% } 50% { top: 100% } 100% { top: 0% } }
 
-    .upload-zone { border 2px dashed #cbd5e1; background #fff; border-radius 12px; padding 1.5rem 1rem; text-align center; cursor pointer; }
-    .excel-format-box { background #f8fafc; border-radius 10px; border 1px solid #cbd5e1; padding 12px; margin-top 12px; }
-    .excel-table { width 100%; border-collapse collapse; font-family monospace; font-size 11px; margin-top 6px; }
-    .excel-table th { background #e2e8f0; color #334155; padding 6px; border 1px solid #cbd5e1; text-align center; font-weight bold; }
-    .excel-table td { padding 6px; border 1px solid #e2e8f0; text-align left; background #fff; }
+    .upload-zone { border: 2px dashed #cbd5e1; background: #fff; border-radius: 12px; padding: 1.5rem 1rem; text-align: center; cursor: pointer; }
+    .excel-format-box { background: #f8fafc; border-radius: 10px; border: 1px solid #cbd5e1; padding: 12px; margin-top: 12px; }
+    .excel-table { width: 100%; border-collapse: collapse; font-family: monospace; font-size: 11px; margin-top: 6px; }
+    .excel-table th { background: #e2e8f0; color: #334155; padding: 6px; border: 1px solid #cbd5e1; text-align: center; font-weight: bold; }
+    .excel-table td { padding: 6px; border: 1px solid #e2e8f0; text-align: left; background: #fff; }
 
-     SINCRONIZACIÓN Y NOTIFICACIONES 
-    .sync-indicator { position fixed; top 12px; right 12px; z-index 7000; display none; }
+    /* SINCRONIZACIÓN Y NOTIFICACIONES */
+    .sync-indicator { position: fixed; top: 12px; right: 12px; z-index: 7000; display: none; }
     .sync-spinner { 
-      display inline-flex; align-items center; gap 8px; 
-      background #fff; padding 12px 16px; border-radius 8px; 
-      box-shadow 0 4px 12px rgba(0,0,0,0.15); border 1px solid #e2e8f0;
+      display: inline-flex; align-items: center; gap: 8px; 
+      background: #fff; padding: 12px 16px; border-radius: 8px; 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 1px solid #e2e8f0;
     }
     .spinner { 
-      width 18px; height 18px; border 2px solid #e2e8f0; 
-      border-top-color #4f46e5; border-radius 50%; animation spin 0.8s linear infinite; 
+      width: 18px; height: 18px; border: 2px solid #e2e8f0; 
+      border-top-color: #4f46e5; border-radius: 50%; animation: spin 0.8s linear infinite; 
     }
-    @keyframes spin { to { transform rotate(360deg); } }
-    .sync-text { font-size 12px; color #64748b; font-weight 600; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .sync-text { font-size: 12px; color: #64748b; font-weight: 600; }
     
     .notification { 
-      position fixed; top 12px; right 12px; z-index 7000; display none;
-      background #fff; padding 14px 16px; border-radius 8px; 
-      box-shadow 0 4px 12px rgba(0,0,0,0.15); border-left 4px solid #4f46e5;
-      font-size 12px; color #1e293b; font-weight 500; max-width 280px;
-      animation slideIn 0.3s ease-out;
+      position: fixed; top: 12px; right: 12px; z-index: 7000; display: none;
+      background: #fff; padding: 14px 16px; border-radius: 8px; 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15); border-left: 4px solid #4f46e5;
+      font-size: 12px; color: #1e293b; font-weight: 500; max-width: 280px;
+      animation: slideIn 0.3s ease-out;
     }
-    @keyframes slideIn { from { transform translateX(400px); opacity 0; } to { transform translateX(0); opacity 1; } }
-    .notification.success { border-left-color #16a34a; }
-    .notification.error { border-left-color #dc2626; }
-    .notification.info { border-left-color #2563eb; }
+    @keyframes slideIn { from { transform: translateX(400px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    .notification.success { border-left-color: #16a34a; }
+    .notification.error { border-left-color: #dc2626; }
+    .notification.info { border-left-color: #2563eb; }
     
-    .sync-btn-status { position relative; }
-    .sync-btn-statusafter { 
-      content ''; position absolute; top -2px; right -2px; width 8px; height 8px; 
-      background #10b981; border-radius 50%; display none; box-shadow 0 0 8px rgba(16,185,129,0.5);
+    .sync-btn-status { position: relative; }
+    .sync-btn-status::after { 
+      content: ''; position: absolute; top: -2px; right: -2px; width: 8px; height: 8px; 
+      background: #10b981; border-radius: 50%; display: none; box-shadow: 0 0 8px rgba(16,185,129,0.5);
     }
-    .sync-btn-status.syncedafter { display block; }
-  style
-head
-body
+    .sync-btn-status.synced::after { display: block; }
+    .stat[aria-disabled="true"] { opacity: 0.55; pointer-events: none; }
+  </style>
+</head>
+<body>
 
-!-- PANTALLA DE INGRESO DE NOMBRE OBLIGATORIO --
-div class=login-screen id=sec-login
-  div class=logo-iconi class=ti ti-user-checkidiv
-  h2Auditoría Crish2
-  pPor favor, ingresa tus nombres y apellidos para comenzar la jornada de conteo.p
-  form onsubmit=handleLogin(event)
-    div class=field style=margin-bottom14px;
-      input type=text id=login-name placeholder=Tu Nombre y Apellido... required style=padding12px; text-aligncenter; font-size15px; font-weight600; border-color#4f46e5;
-    div
-    button type=submit class=btn btn-primary style=width100%; padding12px; font-size14px;Entrar al Sistemabutton
-  form
-div
+<!-- PANTALLA DE INGRESO DE NOMBRE OBLIGATORIO -->
+<div class="login-screen" id="sec-login">
+  <div class="logo-icon"><i class="ti ti-user-check"></i></div>
+  <h2>Auditoría Cris</h2>
+  <p>Por favor, ingresa tus nombres y apellidos para comenzar la jornada de conteo.</p>
+  <form onsubmit="handleLogin(event)">
+    <div class="field" style="margin-bottom:14px;">
+      <input type="text" id="login-name" placeholder="Tu Nombre y Apellido..." required style="padding:12px; text-align:center; font-size:15px; font-weight:600; border-color:#4f46e5;">
+    </div>
+    <button type="submit" class="btn btn-primary" style="width:100%; padding:12px; font-size:14px;">Entrar al Sistema</button>
+  </form>
+</div>
 
-!-- APLICACIÓN PRINCIPAL --
-div class=app id=main-app-layout
-  div class=topbar
-    div style=displayflex; justify-contentspace-between; width100%; align-itemscenter;
-      span class=titlei class=ti ti-building-warehouse style=color#4f46e5i Panel Crisspan
-      div style=displayflex; gap8px; align-itemscenter;
-        button class=btn btn-secondary sync-btn-status id=sync-btn-manual onclick=forceSync() style=padding8px 12px; font-size11px; displayflex; align-itemscenter; gap4px; title=Sincronizar ahora desde Firebase
-          i class=ti ti-cloud-downloadi span style=displaynone; margin-left4px;Sincronizando...span
-        button
-        span style=font-size11px; color#475569; background#e2e8f0; padding4px 8px; border-radius6px; cursorpointer; font-weight600; onclick=logout()
-          👤 span id=user-display-name...span i class=ti ti-logout style=font-size12px; color#ef4444; margin-left2px;i
-        span
-      div
-    div
-    div class=tabs
-      button class=tab active id=tab-inventario onclick=showTab('inventario')Conteobutton
-      button class=tab id=tab-alertas onclick=showTab('alertas')Descuadresbutton
-      button class=tab id=tab-importar onclick=showTab('importar')Excelbutton
-    div
-  div
+<!-- APLICACIÓN PRINCIPAL -->
+<div class="app" id="main-app-layout">
+  <div class="topbar">
+    <div style="display:flex; justify-content:space-between; width:100%; align-items:center;">
+      <span class="title"><i class="ti ti-building-warehouse" style="color:#4f46e5"></i> Panel Cris</span>
+      <div style="display:flex; gap:8px; align-items:center;">
+        <button class="btn btn-secondary sync-btn-status" id="sync-btn-manual" onclick="forceSync()" style="padding:8px 12px; font-size:11px; display:flex; align-items:center; gap:4px;" title="Sincronizar ahora desde Firebase">
+          <i class="ti ti-cloud-download"></i> <span style="display:none; margin-left:4px;">Sincronizando...</span>
+        </button>
+        <span style="font-size:11px; color:#475569; background:#e2e8f0; padding:4px 8px; border-radius:6px; cursor:pointer; font-weight:600;" onclick="logout()">
+          👤 <span id="user-display-name">...</span> <i class="ti ti-logout" style="font-size:12px; color:#ef4444; margin-left:2px;"></i>
+        </span>
+      </div>
+    </div>
+    <div class="tabs">
+      <button class="tab active" id="tab-inventario" onclick="showTab('inventario')">Conteo</button>
+      <button class="tab" id="tab-alertas" onclick="showTab('alertas')">Descuadres</button>
+      <button class="tab" id="tab-importar" onclick="showTab('importar')">Excel</button>
+    </div>
+  </div>
 
-  !-- INDICADOR DE SINCRONIZACIÓN --
-  div class=sync-indicator id=sync-indicator
-    div class=sync-spinner
-      div class=spinnerdiv
-      span class=sync-text id=sync-textSincronizando...span
-    div
-  div
+  <!-- INDICADOR DE SINCRONIZACIÓN -->
+  <div class="sync-indicator" id="sync-indicator">
+    <div class="sync-spinner">
+      <div class="spinner"></div>
+      <span class="sync-text" id="sync-text">Sincronizando...</span>
+    </div>
+  </div>
 
-  !-- NOTIFICACIÓN --
-  div class=notification id=notificationdiv
+  <!-- NOTIFICACIÓN -->
+  <div class="notification" id="notification"></div>
 
-  div class=stats
-    div class=statdiv class=stat-labelTotaldivdiv class=stat-val id=st-total0divdiv
-    div class=statdiv class=stat-labelOKdivdiv class=stat-val success id=st-ok-val0divdiv
-    div class=statdiv class=stat-labelSob.divdiv class=stat-val warn id=st-low-val0divdiv
-    div class=statdiv class=stat-labelFal.divdiv class=stat-val danger id=st-out-val0divdiv
-  div
+  <div class="top-filters" style="margin-bottom:12px;">
+    <div class="stats">
+      <button type="button" class="stat active" id="fg-total" onclick="setFirstFilter('total')"><div class="stat-label">TOTAL</div><div class="stat-val" id="fg-total-val">0</div></button>
+      <button type="button" class="stat" id="fg-counted" onclick="setFirstFilter('counted')"><div class="stat-label">CONTADOS</div><div class="stat-val" id="fg-counted-val">0</div></button>
+      <button type="button" class="stat" id="fg-notcounted" onclick="setFirstFilter('notCounted')"><div class="stat-label">FALTAN CONTAR</div><div class="stat-val" id="fg-notcounted-val">0</div></button>
+      <button type="button" class="stat" id="sg-equal" onclick="setSecondFilter('equal')"><div class="stat-label">CUADRADOS (=)</div><div class="stat-val" id="sg-equal-val">0</div></button>
+      <button type="button" class="stat" id="sg-low" onclick="setSecondFilter('low')"><div class="stat-label">SOBRANTES (+)</div><div class="stat-val" id="sg-low-val">0</div></button>
+      <button type="button" class="stat" id="sg-out" onclick="setSecondFilter('out')"><div class="stat-label">FALTANTES (-)</div><div class="stat-val" id="sg-out-val">0</div></button>
+    </div>
+  </div>
+  <div id="active-stats-filter" style="font-size:12px; color:#475569; font-weight:600; margin:-2px 0 10px; text-align:center;" aria-live="polite">Mostrando: Todos los productos</div>
 
-  !-- COMPONENTE VISUAL BARRA DE PORCENTAJE DE AVANCE --
-  div class=progress-container
-    div class=progress-info
-      spanProgreso Generalspan
-      span id=progress-percentage-text0%span
-    div
-    div class=progress-bar-bg
-      div class=progress-bar-fill id=progress-bar-fill-elementdiv
-    div
-    div style=font-size 10px; color #64748b; text-align right; margin-top 4px; font-weight 500; id=progress-count-text
-      0 de 0 artículos controlados
-    div
-  div
-
-  div id=sec-inventario class=section active
-    div class=toolbar
-      input type=text id=search placeholder=🔍 Buscar producto o código... oninput=renderTable()
+  <div id="sec-inventario" class="section active">
+    <div class="toolbar">
+      <input type="text" id="search" placeholder="🔍 Buscar producto o código..." oninput="renderTable()">
       
-      div class=btn-group
-        button class=btn btn-scan onclick=startScanner()i class=ti ti-scani Escanearbutton
-        button class=btn btn-secondary onclick=openAdd()i class=ti ti-plusi Manualbutton
-      div
-    div
+      <div class="btn-group">
+        <button class="btn btn-scan" onclick="startScanner()"><i class="ti ti-scan"></i> Escanear</button>
+        <button class="btn btn-secondary" onclick="openAdd()"><i class="ti ti-plus"></i> Manual</button>
+      </div>
+    </div>
     
-    div class=tbl-wrap
-      table
-        thead
-          tr
-            thArticuloth
-            th style=width55px; text-aligncenter;Excth
-            th style=width105px; text-aligncenter;Realth
-          tr
-        thead
-        tbody id=tbl-bodytbody
-      table
-    div
-  div
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Articulo</th>
+            <th style="width:55px; text-align:center;">Exc</th>
+            <th style="width:105px; text-align:center;">Real</th>
+          </tr>
+        </thead>
+        <tbody id="tbl-body"></tbody>
+      </table>
+    </div>
+  </div>
 
-  div id=sec-alertas class=section
-    button class=btn btn-excel id=btn-export-excel onclick=exportAuditExcel()
-      i class=ti ti-download-sheeti Descargar Todo lo Contado (.xlsx)
-    button
-    div style=margin-bottom 10px; font-size 13px; color#475569; font-weight 500; id=report-summarydiv
-    div id=alert-listdiv
-  div
+  <div id="sec-alertas" class="section">
+    <button class="btn btn-excel" id="btn-export-excel" onclick="exportAuditExcel()">
+      <i class="ti ti-download-sheet"></i> Descargar Todo lo Contado (.xlsx)
+    </button>
+    <div style="margin-bottom: 10px; font-size: 13px; color:#475569; font-weight: 500;" id="report-summary"></div>
+    <div id="alert-list"></div>
+  </div>
 
-  div id=sec-importar class=section
-    div class=upload-zone onclick=document.getElementById('file-in').click()
-      i class=ti ti-file-spreadsheet style=font-size32px; color#10b981; margin-bottom4px; displayblock;i
-      p style=font-size14px; color#1e293b;bCargar Archivo de Inventario (.xlsx)bp
-      p style=font-size11px; color#64748b; margin-top2px;Haz clic aquí para seleccionar tu documentop
-    div
-    input type=file id=file-in accept=.xlsx,.xls style=displaynone onchange=importExcel(this)
-    div id=import-msg style=margin-top8px;div
+  <div id="sec-importar" class="section">
+    <div class="upload-zone" onclick="document.getElementById('file-in').click()">
+      <i class="ti ti-file-spreadsheet" style="font-size:32px; color:#10b981; margin-bottom:4px; display:block;"></i>
+      <p style="font-size:14px; color:#1e293b;"><b>Cargar Archivo de Inventario (.xlsx)</b></p>
+      <p style="font-size:11px; color:#64748b; margin-top:2px;">Haz clic aquí para seleccionar tu documento</p>
+    </div>
+    <input type="file" id="file-in" accept=".xlsx,.xls" style="display:none" onchange="importExcel(this)">
+    <div id="import-msg" style="margin-top:8px;"></div>
     
-    div class=excel-format-box
-      h4 style=font-size 12px; color#0f172a; displayflex; align-itemscenter; gap4px; font-weight700;
-        i class=ti ti-circle-check style=color#10b981; font-size16px;i Formatos de Columnas Vinculados
-      h4
-      p style=font-size 11px; color#475569; margin-top4px;El lector automático procesará tu archivo usando exactamente estas cabecerasp
+    <div class="excel-format-box">
+      <h4 style="font-size: 12px; color:#0f172a; display:flex; align-items:center; gap:4px; font-weight:700;">
+        <i class="ti ti-circle-check" style="color:#10b981; font-size:16px;"></i> Formatos de Columnas Vinculados:
+      </h4>
+      <p style="font-size: 11px; color:#475569; margin-top:4px;">El lector automático procesará tu archivo usando exactamente estas cabeceras:</p>
       
-      table class=excel-table
-        thead
-          tr
-            thCódigoth
-            thCodigo alternativoth
-            thArticuloth
-            thSub Familiath
-            thStock Totalth
-          tr
-        thead
-        tbody
-          tr
-            td0440td
-            td7701234567890td
-            tdACEITE ARGAN ROSADO...td
-            tdGENERALtd
-            td6td
-          tr
-        tbody
-      table
-    div
+      <table class="excel-table">
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Codigo alternativo</th>
+            <th>Articulo</th>
+            <th>Sub Familia</th>
+            <th>Stock Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0440</td>
+            <td>7701234567890</td>
+            <td>ACEITE ARGAN ROSADO...</td>
+            <td>GENERAL</td>
+            <td>6</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     
-    div style=margin-top1.5rem; background#fff; padding12px; border-radius10px; border1px solid #e2e8f0;
-      h4 style=color#ef4444; font-size13px; margin-bottom4px;i class=ti ti-alert-trianglei Acciones de Controlh4
-      p style=font-size12px; color#64748b; margin-bottom10px;Limpia la memoria local para borrar auditorías anteriores y cargar una lista nueva.p
-      button class=btn btn-danger style=width100% onclick=clearAuditor()Reiniciar Base de Datosbutton
-    div
-  div
-div
+    <div style="margin-top:1.5rem; background:#fff; padding:12px; border-radius:10px; border:1px solid #e2e8f0;">
+      <h4 style="color:#ef4444; font-size:13px; margin-bottom:4px;"><i class="ti ti-alert-triangle"></i> Acciones de Control</h4>
+      <p style="font-size:12px; color:#64748b; margin-bottom:10px;">Limpia la memoria local para borrar auditorías anteriores y cargar una lista nueva.</p>
+      <button class="btn btn-danger" style="width:100%" onclick="clearAuditor()">Reiniciar Base de Datos</button>
+    </div>
+  </div>
+</div>
 
-!-- FORMULARIO DE CONTEO MODAL --
-div class=modal-bg id=modal-wrap style=displaynone onclick=if(event.target===this)closeModal()
-  div class=modal
-    h3 id=modal-titleRegistrar Conteoh3
-    form id=modal-form onsubmit=saveModal(event)
-      input type=hidden id=m-id
-      div class=fieldlabelDescripción del Artículolabelinput type=text id=m-namediv
-      div id=modal-product-info style=displaynone; background#f8fafc; border1px solid #e2e8f0; border-radius8px; padding10px; margin-bottom8px; font-size11px; color#475569;div
-      div class=field style=displaynoneinput type=text id=m-codeinput type=text id=m-catdiv
-      div class=fieldlabelStock Teórico (Excel)labelinput type=number id=m-stock value=0div
+<!-- FORMULARIO DE CONTEO MODAL -->
+<div class="modal-bg" id="modal-wrap" style="display:none" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <h3 id="modal-title">Registrar Conteo</h3>
+    <form id="modal-form" onsubmit="saveModal(event)">
+      <input type="hidden" id="m-id">
+      <div class="field"><label>Descripción del Artículo</label><input type="text" id="m-name"></div>
+      <div class="field" style="display:none"><input type="text" id="m-code"><input type="text" id="m-cat"></div>
+      <div class="field"><label>Stock Teórico (Excel)</label><input type="number" id="m-stock" value="0"></div>
       
-      div style=margin-top10px; margin-bottom4px;label style=font-size11px; font-weight600; color#475569;UBICACIÓN FÍSICAlabeldiv
-      div class=location-toggle
-        button type=button class=loc-btn active percha id=loc-percha-btn onclick=selectLocation('percha')i class=ti ti-browseri Perchabutton
-        button type=button class=loc-btn bodega id=loc-bodega-btn onclick=selectLocation('bodega')i class=ti ti-building-warehousei Bodegabutton
-      div
-      input type=hidden id=m-selected-loc value=percha
+      <div style="margin-top:10px; margin-bottom:4px;"><label style="font-size:11px; font-weight:600; color:#475569;">UBICACIÓN FÍSICA:</label></div>
+      <div class="location-toggle">
+        <button type="button" class="loc-btn active percha" id="loc-percha-btn" onclick="selectLocation('percha')"><i class="ti ti-browser"></i> Percha</button>
+        <button type="button" class="loc-btn bodega" id="loc-bodega-btn" onclick="selectLocation('bodega')"><i class="ti ti-building-warehouse"></i> Bodega</button>
+      </div>
+      <input type="hidden" id="m-selected-loc" value="percha">
 
-      div class=field style=background #f5f3ff; padding 10px; border-radius 8px; border 1px solid #ddd6fe;
-        label id=input-qty-label style=color#4f46e5; font-weight bold; font-size11px;CANTIDAD EN PERCHAlabel
-        input type=number id=m-real value= placeholder=Ingresa las unidades... required style=border-color#4f46e5; font-size16px; font-weightbold; margin-top2px; inputmode=numeric
-      div
+      <div class="field" style="background: #f5f3ff; padding: 10px; border-radius: 8px; border: 1px solid #ddd6fe;">
+        <label id="input-qty-label" style="color:#4f46e5; font-weight: bold; font-size:11px;">CANTIDAD EN PERCHA</label>
+        <input type="number" id="m-real" value="" placeholder="Ingresa las unidades..." required style="border-color:#4f46e5; font-size:16px; font-weight:bold; margin-top:2px;" inputmode="numeric">
+      </div>
       
-      div style=font-size11px; color#64748b; margin-top6px; text-aligncenter; id=modal-summary-previewTotal 0 unidadesdiv
-      div class=modal-btns
-        button type=button class=btn btn-secondary onclick=closeModal()Cancelarbutton
-        button type=submit class=btn btn-primaryGuardar Conteobutton
-      div
-    form
-  div
-div
+      <div style="font-size:13px; color:#475569; margin-top:8px; text-align:center;" id="modal-summary-preview">Total Real: <b>0 uds</b></div>
+      <div class="modal-btns">
+        <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Guardar Conteo</button>
+      </div>
+    </form>
+  </div>
+</div>
 
-!-- ESCÁNER MODAL --
-div class=scanner-modal id=scanner-modal style=displaynone
-  div style=color #fff; font-size 14px;Coloca el código de barras frente a la cámaradiv
-  div class=scanner-box
-    video id=scan-video autoplay playsinline mutedvideo
-    div class=scan-overlaydiv class=scan-framediv class=scan-linedivdivdiv
-  div
-  button class=btn btn-danger style=width 100%; max-width 250px; onclick=stopScanner()Apagar Escánerbutton
-div
+<!-- ESCÁNER MODAL -->
+<div class="scanner-modal" id="scanner-modal" style="display:none">
+  <div style="color: #fff; font-size: 14px;">Coloca el código de barras frente a la cámara</div>
+  <div class="scanner-box">
+    <video id="scan-video" autoplay playsinline muted></video>
+    <div class="scan-overlay"><div class="scan-frame"><div class="scan-line"></div></div></div>
+  </div>
+  <button class="btn btn-danger" style="width: 100%; max-width: 250px;" onclick="stopScanner()">Apagar Escáner</button>
+</div>
 
-script src=httpscdnjs.cloudflare.comajaxlibsxlsx0.18.5xlsx.full.min.jsscript
-script src=httpscdn.jsdelivr.netnpm@zxinglibrary@0.19.1umdindex.min.jsscript
-script
-window.firebaseAuthReady = new Promise((resolve, reject) = {
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@zxing/library@0.19.1/umd/index.min.js"></script>
+<script>
+window.firebaseAuthReady = new Promise((resolve, reject) => {
   window.__resolveFirebaseAuthReady = resolve;
   window.__rejectFirebaseAuthReady = reject;
 });
 window.firebaseReady = window.firebaseAuthReady;
-script
-script type=module
-  import { initializeApp as initializeFirebaseApp } from httpswww.gstatic.comfirebasejs12.14.0firebase-app.js;
-  import { getAnalytics } from httpswww.gstatic.comfirebasejs12.14.0firebase-analytics.js;
-  import { getFirestore, doc, setDoc, getDoc, onSnapshot, serverTimestamp, query, collection } from httpswww.gstatic.comfirebasejs12.14.0firebase-firestore.js;
-  import { getAuth, signInAnonymously, onAuthStateChanged } from httpswww.gstatic.comfirebasejs12.14.0firebase-auth.js;
+</script>
+<script type="module">
+  import { initializeApp as initializeFirebaseApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-analytics.js";
+  import { getFirestore, doc, setDoc, getDoc, onSnapshot, serverTimestamp, query, collection } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+  import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
 
   const firebaseConfig = {
-    apiKey AIzaSyCcdKrWw2idAfFwdcSzXKhxLfLgasA0nIQ,
-    authDomain inventarios-local.firebaseapp.com,
-    projectId inventarios-local,
-    storageBucket inventarios-local.firebasestorage.app,
-    messagingSenderId 1004193873972,
-    appId 11004193873972web8777d840a54d25a02cca61,
-    measurementId G-JVE6PY9K40
+    apiKey: "AIzaSyCcdKrWw2idAfFwdcSzXKhxLfLgasA0nIQ",
+    authDomain: "inventarios-local.firebaseapp.com",
+    projectId: "inventarios-local",
+    storageBucket: "inventarios-local.firebasestorage.app",
+    messagingSenderId: "1004193873972",
+    appId: "1:1004193873972:web:8777d840a54d25a02cca61",
+    measurementId: "G-JVE6PY9K40"
   };
 
   try {
@@ -363,23 +378,23 @@ script type=module
     try {
       getAnalytics(app);
     } catch (analyticsError) {
-      console.warn(Firebase Analytics no se pudo inicializar. Firestore sigue disponible., analyticsError);
+      console.warn("Firebase Analytics no se pudo inicializar. Firestore sigue disponible.", analyticsError);
     }
 
     const db = getFirestore(app);
     const auth = getAuth(app);
-    const inventoryDocRef = doc(db, auditorias, inventario_actual);
+    const inventoryDocRef = doc(db, "auditorias", "inventario_actual");
     let authReadySettled = false;
     let anonymousSignInStarted = false;
     let realtimeUnsubscribe = null;
 
-    onAuthStateChanged(auth, async (user) = {
+    onAuthStateChanged(auth, async (user) => {
       try {
         if (authReadySettled) return;
 
         if (user) {
           authReadySettled = true;
-          console.log(Firebase Auth listo. UID, user.uid);
+          console.log("Firebase Auth listo. UID:", user.uid);
           window.__resolveFirebaseAuthReady(user);
           return;
         }
@@ -388,19 +403,19 @@ script type=module
         anonymousSignInStarted = true;
         const credential = await signInAnonymously(auth);
         authReadySettled = true;
-        console.log(Sesion anonima iniciada. UID, credential.user.uid);
+        console.log("Sesion anonima iniciada. UID:", credential.user.uid);
         window.__resolveFirebaseAuthReady(credential.user);
       } catch (authError) {
         if (!authReadySettled) {
           authReadySettled = true;
-          console.error(Error en autenticacion anonima, authError);
+          console.error("Error en autenticacion anonima:", authError);
           window.__rejectFirebaseAuthReady(authError);
         }
       }
-    }, (authError) = {
+    }, (authError) => {
       if (!authReadySettled) {
         authReadySettled = true;
-        console.error(Error observando Firebase Auth, authError);
+        console.error("Error observando Firebase Auth:", authError);
         window.__rejectFirebaseAuthReady(authError);
       }
     });
@@ -408,62 +423,62 @@ script type=module
     window.saveProductsToFirebase = async function(products, currentUser) {
       const firebaseUser = await window.firebaseAuthReady;
       await setDoc(inventoryDocRef, {
-        products Array.isArray(products)  products  [],
-        updatedAt serverTimestamp(),
-        updatedAtLocal new Date().toISOString(),
-        updatedBy currentUser  Sin usuario,
-        firebaseUid firebaseUser.uid
-      }, { merge true });
-      console.log(Datos guardados en Firestore por UID, firebaseUser.uid);
+        products: Array.isArray(products) ? products : [],
+        updatedAt: serverTimestamp(),
+        updatedAtLocal: new Date().toISOString(),
+        updatedBy: currentUser || "Sin usuario",
+        firebaseUid: firebaseUser.uid
+      }, { merge: true });
+      console.log("Datos guardados en Firestore por UID:", firebaseUser.uid);
     };
 
     window.loadProductsFromFirebase = async function() {
       const firebaseUser = await window.firebaseAuthReady;
       const snapshot = await getDoc(inventoryDocRef);
       if (!snapshot.exists()) {
-        console.log(No existe inventario_actual en Firestore. UID, firebaseUser.uid);
+        console.log("No existe inventario_actual en Firestore. UID:", firebaseUser.uid);
         return [];
       }
 
       const data = snapshot.data();
       if (Array.isArray(data.products)) {
-        console.log(`Datos cargados desde Firestore por UID ${firebaseUser.uid}. Productos ${data.products.length}`);
+        console.log(`Datos cargados desde Firestore por UID: ${firebaseUser.uid}. Productos: ${data.products.length}`);
         return data.products;
       }
 
-      console.warn(El documento de Firestore no tiene un arreglo products valido.);
+      console.warn("El documento de Firestore no tiene un arreglo products valido.");
       return [];
     };
 
     window.clearProductsFromFirebase = async function(currentUser) {
       const firebaseUser = await window.firebaseAuthReady;
       await setDoc(inventoryDocRef, {
-        products [],
-        updatedAt serverTimestamp(),
-        updatedAtLocal new Date().toISOString(),
-        updatedBy currentUser  Sin usuario,
-        firebaseUid firebaseUser.uid,
-        cleared true
-      }, { merge true });
-      console.log(Inventario limpiado en Firestore por UID, firebaseUser.uid);
+        products: [],
+        updatedAt: serverTimestamp(),
+        updatedAtLocal: new Date().toISOString(),
+        updatedBy: currentUser || "Sin usuario",
+        firebaseUid: firebaseUser.uid,
+        cleared: true
+      }, { merge: true });
+      console.log("Inventario limpiado en Firestore por UID:", firebaseUser.uid);
     };
 
     window.setupRealtimeListener = function() {
       if (realtimeUnsubscribe) {
-        console.warn(Ya existe un listener en tiempo real activo.);
+        console.warn("Ya existe un listener en tiempo real activo.");
         return;
       }
       
-      realtimeUnsubscribe = onSnapshot(inventoryDocRef, (doc) = {
+      realtimeUnsubscribe = onSnapshot(inventoryDocRef, (doc) => {
         if (doc.exists()) {
           const data = doc.data();
           if (Array.isArray(data.products)) {
-            console.log([SYNC EN TIEMPO REAL] Sincronizando desde Firestore, data.products.length, productos);
+            console.log("[SYNC EN TIEMPO REAL] Sincronizando desde Firestore:", data.products.length, "productos");
             window.__firebaseRemoteSync(data.products, data.updatedBy, data.firebaseUid);
           }
         }
-      }, (error) = {
-        console.error(Error en listener en tiempo real, error);
+      }, (error) => {
+        console.error("Error en listener en tiempo real:", error);
       });
     };
 
@@ -471,41 +486,46 @@ script type=module
       if (realtimeUnsubscribe) {
         realtimeUnsubscribe();
         realtimeUnsubscribe = null;
-        console.log(Listener en tiempo real detenido.);
+        console.log("Listener en tiempo real detenido.");
       }
     };
 
-    console.log(Firebase inicializado correctamente. Auth anonimo pendientelisto. Listeners en tiempo real disponibles.);
+    console.log("Firebase inicializado correctamente. Auth anonimo pendiente/listo. Listeners en tiempo real disponibles.");
   } catch (error) {
-    console.error(Error al inicializar Firebase o Firestore, error);
+    console.error("Error al inicializar Firebase o Firestore:", error);
     if (window.__rejectFirebaseAuthReady) window.__rejectFirebaseAuthReady(error);
   }
-script
-script
-let products = JSON.parse(localStorage.getItem('audit_droid_v2'))  [];
+</script>
+<script>
+let products = JSON.parse(localStorage.getItem('audit_droid_v2')) || [];
 let nextId = 1;
 let currentCode = '';
 let codeReader = null;
 let currentEditingProduct = null;
-let currentUser = localStorage.getItem('audit_active_user')  '';
+let currentUser = localStorage.getItem('audit_active_user') || '';
 
 let activeCategory = '';
 let activeProgress = '';
 let activeAudit = '';
+// Nuevos filtros:
+// firstFilter: 'total' | 'counted' | 'notCounted'
+// secondFilter: '' | 'equal' | 'low' | 'out'
+let firstFilter = 'total';
+let secondFilter = '';
 
- FLAG para evitar sincronización infinita (cuando recibimos cambios remotos, no guardamos nuevamente)
+// FLAG para evitar sincronización infinita (cuando recibimos cambios remotos, no guardamos nuevamente)
 let syncingFromRemote = false;
 let lastSyncTimestamp = 0;
 
- NOTIFICACIONES Y SINCRONIZACIÓN MANUAL
+// NOTIFICACIONES Y SINCRONIZACIÓN MANUAL
 function showNotification(message, type = 'info', duration = 4000) {
   const notifEl = document.getElementById('notification');
   notifEl.textContent = message;
   notifEl.className = `notification ${type}`;
   notifEl.style.display = 'block';
   
-  if (duration  0) {
-    setTimeout(() = {
+  if (duration > 0) {
+    setTimeout(() => {
       notifEl.style.display = 'none';
     }, duration);
   }
@@ -526,9 +546,9 @@ function showSyncIndicator(show = true, text = 'Sincronizando...') {
 async function forceSync() {
   const syncBtn = document.getElementById('sync-btn-manual');
   
-   Evitar múltiples sincronizaciones simultáneas
+  // Evitar múltiples sincronizaciones simultáneas
   if (syncBtn.disabled) {
-    console.log(Sincronización ya en progreso...);
+    console.log("Sincronización ya en progreso...");
     return;
   }
   
@@ -537,87 +557,87 @@ async function forceSync() {
   syncBtn.style.pointerEvents = 'none';
   
   showSyncIndicator(true, 'Sincronizando desde Firebase...');
-  console.log([FORCE SYNC] Iniciando sincronización manual...);
+  console.log("[FORCE SYNC] Iniciando sincronización manual...");
   
   try {
-     Esperar a que Firebase esté listo
+    // Esperar a que Firebase esté listo
     if (!window.firebaseAuthReady) {
-      throw new Error(Firebase no está disponible);
+      throw new Error("Firebase no está disponible");
     }
     
     const firebaseUser = await Promise.race([
       window.firebaseAuthReady,
-      new Promise((_, reject) = setTimeout(() = reject(new Error(Timeout esperando Firebase)), 5000))
+      new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout esperando Firebase")), 5000))
     ]);
     
     if (!firebaseUser) {
-      throw new Error(No hay usuario Firebase autenticado);
+      throw new Error("No hay usuario Firebase autenticado");
     }
     
     showSyncIndicator(true, 'Cargando datos de Firestore...');
     
-     Cargar datos desde Firebase
+    // Cargar datos desde Firebase
     if (!window.loadProductsFromFirebase) {
-      throw new Error(Función loadProductsFromFirebase no está disponible);
+      throw new Error("Función loadProductsFromFirebase no está disponible");
     }
     
     const firebaseProducts = await window.loadProductsFromFirebase();
     
     if (!Array.isArray(firebaseProducts)) {
-      throw new Error(Datos de Firebase inválidos);
+      throw new Error("Datos de Firebase inválidos");
     }
     
     showSyncIndicator(true, 'Procesando y actualizando...');
     
-     Verificar si hay cambios
-    const localJSON = JSON.stringify(products.sort((a, b) = a.id - b.id));
-    const remoteJSON = JSON.stringify(firebaseProducts.sort((a, b) = a.id - b.id));
+    // Verificar si hay cambios
+    const localJSON = JSON.stringify(products.sort((a, b) => a.id - b.id));
+    const remoteJSON = JSON.stringify(firebaseProducts.sort((a, b) => a.id - b.id));
     
     if (localJSON === remoteJSON) {
       showSyncIndicator(false);
       showNotification(`✅ Datos ya están sincronizados (${firebaseProducts.length} productos)`, 'success', 3000);
-      console.log([FORCE SYNC] Datos ya sincronizados);
+      console.log("[FORCE SYNC] Datos ya sincronizados");
       syncBtn.classList.add('synced');
-      setTimeout(() = syncBtn.classList.remove('synced'), 2000);
+      setTimeout(() => syncBtn.classList.remove('synced'), 2000);
     } else {
-       MERGE Actualizar productos
-      console.log(`[FORCE SYNC] Detectados cambios. Local ${products.length}, Remoto ${firebaseProducts.length}`);
+      // MERGE: Actualizar productos
+      console.log(`[FORCE SYNC] Detectados cambios. Local: ${products.length}, Remoto: ${firebaseProducts.length}`);
       
       products = firebaseProducts;
       recalculateNextId();
       
-       Actualizar localStorage
+      // Actualizar localStorage
       localStorage.setItem('audit_droid_v2', JSON.stringify(products));
       
-       Actualizar UI - INCLUYE updateStats()
+      // Actualizar UI - INCLUYE updateStats()
       updateStats();
       renderTable();
       
-       Si la pestaña de alertas está activa, actualizar también
+      // Si la pestaña de alertas está activa, actualizar también
       if (document.getElementById('sec-alertas').classList.contains('active')) {
         renderAlerts();
       }
       
       showSyncIndicator(false);
       showNotification(`✅ Sincronización exitosa (${firebaseProducts.length} productos actualizados)`, 'success', 3000);
-      console.log([FORCE SYNC] ✅ Sincronización completada con éxito);
+      console.log("[FORCE SYNC] ✅ Sincronización completada con éxito");
       syncBtn.classList.add('synced');
-      setTimeout(() = syncBtn.classList.remove('synced'), 2000);
+      setTimeout(() => syncBtn.classList.remove('synced'), 2000);
     }
     
   } catch (error) {
-    console.error([FORCE SYNC] Error durante sincronización, error);
+    console.error("[FORCE SYNC] Error durante sincronización:", error);
     showSyncIndicator(false);
     
-    let errorMsg = Error en la sincronización;
-    if (error.message.includes(Timeout)) {
-      errorMsg = ⏱️ Timeout Firebase tardó demasiado en responder;
-    } else if (error.message.includes(Firebase no está disponible)) {
-      errorMsg = ❌ Firebase no está disponible;
-    } else if (error.message.includes(No hay usuario)) {
-      errorMsg = ❌ No hay usuario autenticado;
-    } else if (error.message.includes(inválidos)) {
-      errorMsg = ❌ Datos inválidos desde Firebase;
+    let errorMsg = "Error en la sincronización";
+    if (error.message.includes("Timeout")) {
+      errorMsg = "⏱️ Timeout: Firebase tardó demasiado en responder";
+    } else if (error.message.includes("Firebase no está disponible")) {
+      errorMsg = "❌ Firebase no está disponible";
+    } else if (error.message.includes("No hay usuario")) {
+      errorMsg = "❌ No hay usuario autenticado";
+    } else if (error.message.includes("inválidos")) {
+      errorMsg = "❌ Datos inválidos desde Firebase";
     } else {
       errorMsg = `❌ ${error.message}`;
     }
@@ -632,16 +652,16 @@ async function forceSync() {
 
 
 function recalculateNextId() {
-  nextId = products.length  Math.max(...products.map(p = Number(p.id)  0)) + 1  1;
+  nextId = products.length ? Math.max(...products.map(p => Number(p.id) || 0)) + 1 : 1;
 }
 
- FUNCIÓN CRÍTICA Sincronización desde Firestore en tiempo real
+// FUNCIÓN CRÍTICA: Sincronización desde Firestore en tiempo real
 window.__firebaseRemoteSync = function(remoteProducts, remoteUpdatedBy, remoteUid) {
   const now = Date.now();
   
-   Evitar sincronización demasiado frecuente (máximo cada 500ms)
-  if (now - lastSyncTimestamp  500) {
-    console.log([SYNC] Sincronización rechazada (demasiado frecuente));
+  // Evitar sincronización demasiado frecuente (máximo cada 500ms)
+  if (now - lastSyncTimestamp < 500) {
+    console.log("[SYNC] Sincronización rechazada (demasiado frecuente)");
     return;
   }
   lastSyncTimestamp = now;
@@ -649,43 +669,43 @@ window.__firebaseRemoteSync = function(remoteProducts, remoteUpdatedBy, remoteUi
   syncingFromRemote = true;
   
   try {
-     Verificar si los datos son diferentes
-    const localJSON = JSON.stringify(products.sort((a, b) = a.id - b.id));
-    const remoteJSON = JSON.stringify(remoteProducts.sort((a, b) = a.id - b.id));
+    // Verificar si los datos son diferentes
+    const localJSON = JSON.stringify(products.sort((a, b) => a.id - b.id));
+    const remoteJSON = JSON.stringify(remoteProducts.sort((a, b) => a.id - b.id));
     
     if (localJSON === remoteJSON) {
-      console.log([SYNC] Datos ya sincronizados, sin cambios);
+      console.log("[SYNC] Datos ya sincronizados, sin cambios");
       syncingFromRemote = false;
       return;
     }
     
-    console.log([SYNC] Detectados cambios remotos. Merging datos...);
+    console.log("[SYNC] Detectados cambios remotos. Merging datos...");
     let changedCount = 0;
     let newProductsCount = 0;
     
-     MERGE INTELIGENTE 
-     1. Mantener cambios locales si el usuario está editando
-     2. Incorporar cambios remotos para productos sin cambios locales pendientes
+    // MERGE INTELIGENTE: 
+    // 1. Mantener cambios locales si el usuario está editando
+    // 2. Incorporar cambios remotos para productos sin cambios locales pendientes
     
-    const mergedProducts = remoteProducts.map(remoteProduct = {
-      const localProduct = products.find(p = p.id === remoteProduct.id);
+    const mergedProducts = remoteProducts.map(remoteProduct => {
+      const localProduct = products.find(p => p.id === remoteProduct.id);
       
       if (!localProduct) {
-         Producto nuevo desde otro dispositivo
-        console.log([SYNC] Producto nuevo agregado, remoteProduct.name);
+        // Producto nuevo desde otro dispositivo
+        console.log("[SYNC] Producto nuevo agregado:", remoteProduct.name);
         newProductsCount++;
         return remoteProduct;
       }
       
-       Si el usuario está editando este producto, preservar datos locales
+      // Si el usuario está editando este producto, preservar datos locales
       if (currentEditingProduct && currentEditingProduct.id === remoteProduct.id) {
-        console.log([SYNC] Preservando cambios locales en edición, remoteProduct.name);
+        console.log("[SYNC] Preservando cambios locales en edición:", remoteProduct.name);
         return localProduct;
       }
       
-       Producto modificado en otro dispositivo
-      if (remoteProduct.updatedAt  localProduct.updatedAt) {
-        console.log([SYNC] Actualizando producto desde remoto, remoteProduct.name);
+      // Producto modificado en otro dispositivo
+      if (remoteProduct.updatedAt > localProduct.updatedAt) {
+        console.log("[SYNC] Actualizando producto desde remoto:", remoteProduct.name);
         changedCount++;
         return remoteProduct;
       }
@@ -693,10 +713,10 @@ window.__firebaseRemoteSync = function(remoteProducts, remoteUpdatedBy, remoteUi
       return localProduct;
     });
     
-     Agregar productos locales que no existen en remoto
-    products.forEach(localProduct = {
-      if (!mergedProducts.find(p = p.id === localProduct.id)) {
-        console.log([SYNC] Producto local no en remoto, agregando, localProduct.name);
+    // Agregar productos locales que no existen en remoto
+    products.forEach(localProduct => {
+      if (!mergedProducts.find(p => p.id === localProduct.id)) {
+        console.log("[SYNC] Producto local no en remoto, agregando:", localProduct.name);
         mergedProducts.push(localProduct);
       }
     });
@@ -704,32 +724,32 @@ window.__firebaseRemoteSync = function(remoteProducts, remoteUpdatedBy, remoteUi
     products = mergedProducts;
     recalculateNextId();
     
-     Actualizar localStorage
+    // Actualizar localStorage
     localStorage.setItem('audit_droid_v2', JSON.stringify(products));
     
-     Actualizar UI - INCLUYE updateStats()
+    // Actualizar UI - INCLUYE updateStats()
     updateStats();
     renderTable();
     
-     Si la pestaña de alertas está activa, actualizar también
+    // Si la pestaña de alertas está activa, actualizar también
     if (document.getElementById('sec-alertas').classList.contains('active')) {
       renderAlerts();
     }
     
-     Mostrar notificación de cambios detectados
-    if (changedCount  0  newProductsCount  0) {
+    // Mostrar notificación de cambios detectados
+    if (changedCount > 0 || newProductsCount > 0) {
       let changeMsg = [];
-      if (newProductsCount  0) changeMsg.push(`${newProductsCount} nuevo(s)`);
-      if (changedCount  0) changeMsg.push(`${changedCount} actualizado(s)`);
-      console.log([SYNC] ✅ Sincronización completada. Cambios, changeMsg.join(', '));
-       Notificación silenciosa (solo en consola para no interrumpir)
-      console.log([SYNC] Cambios desde otro dispositivo por, remoteUpdatedBy);
+      if (newProductsCount > 0) changeMsg.push(`${newProductsCount} nuevo(s)`);
+      if (changedCount > 0) changeMsg.push(`${changedCount} actualizado(s)`);
+      console.log("[SYNC] ✅ Sincronización completada. Cambios:", changeMsg.join(', '));
+      // Notificación silenciosa (solo en consola para no interrumpir)
+      console.log("[SYNC] Cambios desde otro dispositivo por", remoteUpdatedBy);
     }
     
-    console.log([SYNC] ✅ Sincronización completada. Productos actuales, products.length);
+    console.log("[SYNC] ✅ Sincronización completada. Productos actuales:", products.length);
     
   } catch (error) {
-    console.error([SYNC] Error durante sincronización, error);
+    console.error("[SYNC] Error durante sincronización:", error);
   } finally {
     syncingFromRemote = false;
   }
@@ -742,7 +762,7 @@ function checkAuth() {
     document.getElementById('user-display-name').textContent = currentUser;
     updateStats(); renderTable();
     
-     Activar listener en tiempo real después de autenticarse
+    // Activar listener en tiempo real después de autenticarse
     if (window.setupRealtimeListener) {
       window.setupRealtimeListener();
     }
@@ -750,7 +770,7 @@ function checkAuth() {
     document.getElementById('sec-login').style.display = 'block';
     document.getElementById('main-app-layout').classList.remove('active');
     
-     Detener listener si no hay usuario
+    // Detener listener si no hay usuario
     if (window.stopRealtimeListener) {
       window.stopRealtimeListener();
     }
@@ -767,7 +787,7 @@ function handleLogin(e) {
 }
 
 function logout() {
-  if (confirm(¿Quieres cerrar sesión o cambiar de auditor)) {
+  if (confirm("¿Quieres cerrar sesión o cambiar de auditor?")) {
     currentUser = '';
     localStorage.removeItem('audit_active_user');
     document.getElementById('login-name').value = '';
@@ -778,47 +798,47 @@ function logout() {
 async function saveToStorage() {
   localStorage.setItem('audit_droid_v2', JSON.stringify(products));
 
-   NO guardar en Firebase si estamos sincronizando desde remoto
+  // NO guardar en Firebase si estamos sincronizando desde remoto
   if (syncingFromRemote) {
-    console.log(Sincronización remota en progreso, no guardar en Firebase);
+    console.log("Sincronización remota en progreso, no guardar en Firebase");
     return;
   }
 
   try {
     if (window.saveProductsToFirebase) {
       await window.saveProductsToFirebase(products, currentUser);
-      console.log(Datos guardados en localStorage y Firebase);
+      console.log("Datos guardados en localStorage y Firebase");
     } else {
-      console.warn(Firebase todavia no esta disponible. Solo se guardo en localStorage.);
+      console.warn("Firebase todavia no esta disponible. Solo se guardo en localStorage.");
     }
   } catch (error) {
-    console.error(Error guardando en Firebase, error);
-     NO mostrar alerta que interrumpa el flujo, solo registrar en consola
-    console.warn(No se pudo guardar en Firebase. Los datos están en localStorage.);
+    console.error("Error guardando en Firebase:", error);
+    // NO mostrar alerta que interrumpa el flujo, solo registrar en consola
+    console.warn("No se pudo guardar en Firebase. Los datos están en localStorage.");
   }
 }
 
-function getTotalReal(p) { return (parseInt(p.percha)  0) + (parseInt(p.bodega)  0); }
-function hasBeenCounted(p) { return p.percha !== 0  p.bodega !== 0  p.isCountedMarked === true; }
+function getTotalReal(p) { return (parseInt(p.percha) || 0) + (parseInt(p.bodega) || 0); }
+function hasBeenCounted(p) { return p.percha !== 0 || p.bodega !== 0 || p.isCountedMarked === true; }
 
 function normalizeHeader(value) {
-  return String(value  '').normalize('NFD').replace([u0300-u036f]g, '').trim().toLowerCase();
+  return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim().toLowerCase();
 }
 
 function getRowValue(row, names) {
   const normalizedNames = names.map(normalizeHeader);
-  const key = Object.keys(row).find(k = normalizedNames.includes(normalizeHeader(k)));
-  return key  row[key]  '';
+  const key = Object.keys(row).find(k => normalizedNames.includes(normalizeHeader(k)));
+  return key ? row[key] : '';
 }
 
 function normalizeCode(value) {
-  return String(value  '').replace(s+g, '').trim();
+  return String(value || '').replace(/\s+/g, '').trim();
 }
 
 function codesMatch(a, b) {
   const codeA = normalizeCode(a);
   const codeB = normalizeCode(b);
-  if (!codeA  !codeB) return false;
+  if (!codeA || !codeB) return false;
   if (codeA === codeB) return true;
 
   const numberA = Number(codeA);
@@ -827,82 +847,171 @@ function codesMatch(a, b) {
 }
 
 function productMatchesCode(product, scannedCode) {
-  return codesMatch(product.code, scannedCode)  codesMatch(product.alternateCode, scannedCode);
+  return codesMatch(product.code, scannedCode) || codesMatch(product.alternateCode, scannedCode);
 }
 
 function status(p){
   const r = getTotalReal(p);
-  return r === p.stock  'ok'  r  p.stock  'low'  'out'; 
+  return r === p.stock ? 'ok' : r > p.stock ? 'low' : 'out'; 
 }
 
 function updateStats(){
   const totalItems = products.length;
-  const countedItems = products.filter(p = hasBeenCounted(p)).length;
-  const percentage = totalItems  0  Math.round((countedItems  totalItems)  100)  0;
-  const okCount = products.filter(p = status(p) === 'ok').length;
-  const lowCount = products.filter(p = status(p) === 'low').length;
-  const outCount = products.filter(p = status(p) === 'out').length;
+  const countedItems = products.filter(p => hasBeenCounted(p)).length;
+  const percentage = totalItems > 0 ? Math.round((countedItems / totalItems) * 100) : 0;
+  // Calcular counts SOLO sobre productos contados
+  const countedProducts = products.filter(p => hasBeenCounted(p));
+  const okCount = countedProducts.filter(p => status(p) === 'ok').length;
+  const lowCount = countedProducts.filter(p => status(p) === 'low').length;
+  const outCount = countedProducts.filter(p => status(p) === 'out').length;
 
-   Actualizar indicadores superiores
-  document.getElementById('st-total').textContent = totalItems;
-  document.getElementById('st-ok-val').textContent = okCount;
-  document.getElementById('st-low-val').textContent = lowCount;
-  document.getElementById('st-out-val').textContent = outCount;
+  // Actualizar indicadores superiores (nuevo diseño de filtros)
+  // Primer grupo
+  document.getElementById('fg-total-val').textContent = totalItems;
+  document.getElementById('fg-counted-val').textContent = products.filter(p => hasBeenCounted(p)).length;
+  document.getElementById('fg-notcounted-val').textContent = products.filter(p => !hasBeenCounted(p)).length;
+  // Segundo grupo
+  document.getElementById('sg-equal-val').textContent = okCount;
+  document.getElementById('sg-low-val').textContent = lowCount;
+  document.getElementById('sg-out-val').textContent = outCount;
 
-   Actualizar barra de progreso
-  document.getElementById('progress-percentage-text').textContent = `${percentage}%`;
-  document.getElementById('progress-bar-fill-element').style.width = `${percentage}%`;
-  document.getElementById('progress-count-text').textContent = `${countedItems} de ${totalItems} artículos controlados (${percentage}%)`;
-  
-  console.log(`[STATS UPDATE] Total ${totalItems}  Contados ${countedItems}  OK ${okCount}  SOB ${lowCount}  FAL ${outCount}  Progreso ${percentage}%`);
+  // Visual: si el primer filtro es 'notCounted', desactivar visualmente segundo grupo
+  if (firstFilter === 'notCounted') {
+    ['sg-equal','sg-low','sg-out'].forEach(id => {
+      const el = document.getElementById(id);
+      el.classList.remove('active');
+      el.setAttribute('aria-disabled','true');
+    });
+  } else {
+    ['sg-equal','sg-low','sg-out'].forEach(id => {
+      const el = document.getElementById(id);
+      el.removeAttribute('aria-disabled');
+    });
+  }
+
+  // Actualizar barra de progreso horizontal (moderno)
+  console.log(`[STATS UPDATE] Total: ${totalItems} | Contados: ${countedItems} | OK: ${okCount} | SOB: ${lowCount} | FAL: ${outCount} | Progreso: ${percentage}%`);
 }
 
 function updateCatFilter(){
-   Función obsoleta - Filtros eliminados
-  console.log(updateCatFilter() ya no es necesaria - Filtros removidos);
+  // Función obsoleta - Filtros eliminados
+  console.log("updateCatFilter() ya no es necesaria - Filtros removidos");
 }
 
 function setFilter(type, value) {
-   Función obsoleta - Filtros eliminados
-  console.log(setFilter() ya no es necesaria - Filtros removidos);
+  // Función obsoleta - Filtros eliminados
+  console.log("setFilter() ya no es necesaria - Filtros removidos");
+}
+
+function setFirstFilter(filter) {
+  // Cambiar selección del primer grupo
+  firstFilter = firstFilter === filter ? 'total' : filter; // alternar: al volver a pulsar, volver a TOTAL
+
+  // Actualizar texto descriptivo
+  const labelsFirst = {
+    counted: 'Mostrando: Contados',
+    notCounted: 'Mostrando: Faltan contar',
+    total: 'Mostrando: Todos los productos'
+  };
+  document.getElementById('active-stats-filter').textContent = labelsFirst[firstFilter] || labelsFirst.total;
+
+  // Actualizar clases visuales del primer grupo
+  ['fg-total','fg-counted','fg-notcounted'].forEach(id => {
+    const el = document.getElementById(id);
+    el.classList.toggle('active', (
+      (id === 'fg-total' && firstFilter === 'total') ||
+      (id === 'fg-counted' && firstFilter === 'counted') ||
+      (id === 'fg-notcounted' && firstFilter === 'notCounted')
+    ));
+  });
+
+  // Si seleccionamos "FALTAN CONTAR", limpiar y desactivar el segundo grupo
+  if (firstFilter === 'notCounted') {
+    secondFilter = '';
+    ['sg-equal','sg-low','sg-out'].forEach(id => document.getElementById(id).classList.remove('active'));
+    ['sg-equal','sg-low','sg-out'].forEach(id => document.getElementById(id).setAttribute('aria-disabled','true'));
+  } else {
+    ['sg-equal','sg-low','sg-out'].forEach(id => document.getElementById(id).removeAttribute('aria-disabled'));
+  }
+
+  renderTable();
+  updateStats();
+}
+
+function setSecondFilter(filter) {
+  // Si primer grupo es 'notCounted', no aplicar segundo filtro
+  if (firstFilter === 'notCounted') {
+    secondFilter = '';
+    showNotification('El filtro de resultado no aplica cuando está "FALTAN CONTAR"', 'info', 2500);
+    return;
+  }
+
+  secondFilter = secondFilter === filter ? '' : filter; // alternar
+
+  // Actualizar clases visuales del segundo grupo
+  ['sg-equal','sg-low','sg-out'].forEach(id => {
+    const el = document.getElementById(id);
+    el.classList.toggle('active', (
+      (id === 'sg-equal' && secondFilter === 'equal') ||
+      (id === 'sg-low' && secondFilter === 'low') ||
+      (id === 'sg-out' && secondFilter === 'out')
+    ));
+  });
+
+  renderTable();
 }
 
 function renderTable(){
   const q = document.getElementById('search').value.toLowerCase();
-  
-  let rows = products.filter(p = {
-    const productName = String(p.name  '').toLowerCase();
-    const productCode = String(p.code  '').toLowerCase();
-    const alternateCode = String(p.alternateCode  '').toLowerCase();
-    const matchQuery = !q  productName.includes(q)  productCode.includes(q)  alternateCode.includes(q);
-    return matchQuery;
+  // Filtrado combinado: buscador + primer grupo (estado del conteo) + segundo grupo (resultado)
+  let rows = products.filter(p => {
+    const productName = String(p.name || '').toLowerCase();
+    const productCode = String(p.code || '').toLowerCase();
+    const alternateCode = String(p.alternateCode || '').toLowerCase();
+    const matchQuery = !q || productName.includes(q) || productCode.includes(q) || alternateCode.includes(q);
+
+    // Primer grupo: estado del conteo
+    let matchFirst = true;
+    if (firstFilter === 'counted') matchFirst = hasBeenCounted(p);
+    else if (firstFilter === 'notCounted') matchFirst = !hasBeenCounted(p);
+
+    // Segundo grupo: resultado del conteo (solo aplicable si no estamos mostrando "FALTAN CONTAR")
+    let matchSecond = true;
+    if (firstFilter !== 'notCounted' && secondFilter) {
+      const st = status(p);
+      if (secondFilter === 'equal') matchSecond = st === 'ok';
+      else if (secondFilter === 'low') matchSecond = st === 'low';
+      else if (secondFilter === 'out') matchSecond = st === 'out';
+    }
+
+    return matchQuery && matchFirst && matchSecond;
   });
   
   const tbody = document.getElementById('tbl-body');
   
-  if(!products.length){ tbody.innerHTML = `trtd colspan=3 class=emptyNo hay datos de inventario. Sube tu archivo Excel en la pestaña Excel.tdtr`; return; }
-  if(!rows.length){ tbody.innerHTML = `trtd colspan=3 class=emptySin coincidencias para la búsqueda.tdtr`; return; }
+  if(!products.length){ tbody.innerHTML = `<tr><td colspan="3" class="empty">No hay datos de inventario. Sube tu archivo Excel en la pestaña Excel.</td></tr>`; return; }
+  if(!rows.length){ tbody.innerHTML = `<tr><td colspan="3" class="empty">No hay productos que coincidan con la búsqueda y el filtro activo.</td></tr>`; return; }
   
-  tbody.innerHTML = rows.map(p = {
+  tbody.innerHTML = rows.map(p => {
     const r = getTotalReal(p);
     const d = r - p.stock;
-    const countedMark = hasBeenCounted(p)  '✔️ '  '⏳ ';
-    const userMark = p.countedBy  `span style=color#0284c7; background#e0f2fe; padding1px 4px; border-radius4px; font-size10px; font-weight600;i class=ti ti-useri ${p.countedBy}span`  '';
-    return `tr onclick=openEditWithData(${p.id})
-      td
-        div style=font-weight600; color#1e293b; font-size13px;${countedMark}${p.name}div
-        div style=font-size11px; color#64748b; font-familymonospace; displayflex; align-itemscenter; gap6px; margin-top2px;
-          spanCód ${p.code}span  span style=color#4f46e5;${p.cat}span ${userMark}
-        div
-        ${p.alternateCode  `div style=font-size10px; color#64748b; font-familymonospace; margin-top1px;Alt ${p.alternateCode}div`  ''}
-      td
-      td style=text-aligncenter; color#64748b; font-weight600;${p.stock}td
-      td style=text-aligncenter;
-        span style=font-weight700; color#0f172a;${r}span
-        span style=color${d===0'#16a34a'd0'#2563eb''#dc2626'}; font-size11px; font-weight700;(${d===0'='(d0'+'+dd)})span
-        span class=sub-unitsP ${p.percha}  B ${p.bodega}span
-      td
-    tr`;
+    const countedMark = hasBeenCounted(p) ? '✔️ ' : '⏳ ';
+    const userMark = p.countedBy ? `<span style="color:#0284c7; background:#e0f2fe; padding:1px 4px; border-radius:4px; font-size:10px; font-weight:600;"><i class="ti ti-user"></i> ${p.countedBy}</span>` : '';
+    return `<tr onclick="openEditWithData(${p.id})">
+      <td>
+        <div style="font-weight:600; color:#1e293b; font-size:13px;">${countedMark}${p.name}</div>
+        <div style="font-size:11px; color:#64748b; font-family:monospace; display:flex; align-items:center; gap:6px; margin-top:2px;">
+          <span>Cód: ${p.code}</span> | <span style="color:#4f46e5;">${p.cat}</span> ${userMark}
+        </div>
+        ${p.alternateCode ? `<div style="font-size:10px; color:#64748b; font-family:monospace; margin-top:1px;">Alt: ${p.alternateCode}</div>` : ''}
+      </td>
+      <td style="text-align:center; color:#64748b; font-weight:600;">${p.stock}</td>
+      <td style="text-align:center;">
+        <span style="font-weight:700; color:#0f172a;">${r}</span>
+        <span style="color:${d===0?'#16a34a':d>0?'#2563eb':'#dc2626'}; font-size:11px; font-weight:700;">(${d===0?'=':(d>0?'+'+d:d)})</span>
+        <span class="sub-units">P: ${p.percha} | B: ${p.bodega}</span>
+      </td>
+    </tr>`;
   }).join('');
 }
 
@@ -910,27 +1019,27 @@ function renderAlerts(){
   const el = document.getElementById('alert-list');
   const summaryEl = document.getElementById('report-summary');
   
-  document.getElementById('btn-export-excel').style.display = products.length  'inline-flex'  'none';
+  document.getElementById('btn-export-excel').style.display = products.length ? 'inline-flex' : 'none';
   
   if(!products.length) { 
-    el.innerHTML = 'div class=emptyNo hay una base de datos activa para auditar.div'; 
+    el.innerHTML = '<div class="empty">No hay una base de datos activa para auditar.</div>'; 
     summaryEl.textContent = '';
     return; 
   }
   
-  const cuadrados = products.filter(p = status(p) === 'ok').length;
-  const sobrantes = products.filter(p = status(p) === 'low').length;
-  const faltantes = products.filter(p = status(p) === 'out').length;
+  const cuadrados = products.filter(p => status(p) === 'ok').length;
+  const sobrantes = products.filter(p => status(p) === 'low').length;
+  const faltantes = products.filter(p => status(p) === 'out').length;
   
-  summaryEl.innerHTML = `📊 Resumen actual span style=color#15803d${cuadrados} Cuadradosspan  span style=color#2563eb${sobrantes} Sobrantesspan  span style=color#dc2626${faltantes} Faltantesspan`;
+  summaryEl.innerHTML = `📊 Resumen actual: <span style="color:#15803d">${cuadrados} Cuadrados</span> | <span style="color:#2563eb">${sobrantes} Sobrantes</span> | <span style="color:#dc2626">${faltantes} Faltantes</span>`;
   
-  const sortedProducts = [...products].sort((a,b) = {
+  const sortedProducts = [...products].sort((a,b) => {
     if(status(a) !== 'ok' && status(b) === 'ok') return -1;
     if(status(a) === 'ok' && status(b) !== 'ok') return 1;
     return 0;
   });
 
-  el.innerHTML = sortedProducts.map(p = {
+  el.innerHTML = sortedProducts.map(p => {
     const stat = status(p);
     const diff = getTotalReal(p) - p.stock;
     
@@ -938,67 +1047,67 @@ function renderAlerts(){
     let borderLeftColor = '#cbd5e1';
     
     if (stat === 'low') {
-      badgeHTML = `span class=badge badge-sob⚠️ Sobrante (+${diff})span`;
+      badgeHTML = `<span class="badge badge-sob">⚠️ Sobrante (+${diff})</span>`;
       borderLeftColor = '#2563eb';
     } else if (stat === 'out') {
-      badgeHTML = `span class=badge badge-fal❌ Faltante (${diff})span`;
+      badgeHTML = `<span class="badge badge-fal">❌ Faltante (${diff})</span>`;
       borderLeftColor = '#dc2626';
     } else {
-      badgeHTML = `span class=badge badge-ok✅ Cuadradospan`;
+      badgeHTML = `<span class="badge badge-ok">✅ Cuadrado</span>`;
       borderLeftColor = '#16a34a';
     }
     
-    const userMark = p.countedBy  `span style=color#0284c7; font-size11px; font-weight500; displayblock; margin-top2px;👤 Contado por b${p.countedBy}bspan`  'span style=color#94a3b8; font-size11px; displayblock; margin-top2px;⏳ Sin contar aúnspan';
+    const userMark = p.countedBy ? `<span style="color:#0284c7; font-size:11px; font-weight:500; display:block; margin-top:2px;">👤 Contado por: <b>${p.countedBy}</b></span>` : '<span style="color:#94a3b8; font-size:11px; display:block; margin-top:2px;">⏳ Sin contar aún</span>';
     
-    return `div class=alert-card style=border-left5px solid ${borderLeftColor} onclick=openEditWithData(${p.id})
-      div style=flex1
-        div style=font-size13px; font-weight600; color#1e293b;${p.name}div
-        ${p.alternateCode  `div style=font-size11px; color#64748b; font-familymonospace;Alt ${p.alternateCode}div`  ''}
-        div style=font-size11px; color#64748b; font-familymonospace;Código ${p.code}div
-        div style=font-size11px; color#475569; margin-top2px;Teórico b${p.stock}b  Físico Real b${getTotalReal(p)}bdiv
+    return `<div class="alert-card" style="border-left:5px solid ${borderLeftColor}" onclick="openEditWithData(${p.id})">
+      <div style="flex:1">
+        <div style="font-size:13px; font-weight:600; color:#1e293b;">${p.name}</div>
+        ${p.alternateCode ? `<div style="font-size:11px; color:#64748b; font-family:monospace;">Alt: ${p.alternateCode}</div>` : ''}
+        <div style="font-size:11px; color:#64748b; font-family:monospace;">Código: ${p.code}</div>
+        <div style="font-size:11px; color:#475569; margin-top:2px;">Teórico: <b>${p.stock}</b> | Físico Real: <b>${getTotalReal(p)}</b></div>
         ${userMark}
-      div
-      div${badgeHTML}div
-    div`;
+      </div>
+      <div>${badgeHTML}</div>
+    </div>`;
   }).join('');
 }
 
 function showTab(t){
-  document.querySelectorAll('.tab').forEach(b = b.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-'+t).classList.add('active');
-  document.querySelectorAll('.section').forEach(s = s.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.getElementById('sec-'+t).classList.add('active');
   if(t === 'alertas') renderAlerts();
 }
 
 function exportAuditExcel() {
-  if (!products.length) { alert(No hay datos para exportar.); return; }
+  if (!products.length) { alert("No hay datos para exportar."); return; }
   
-  const reportData = products.map(p = {
+  const reportData = products.map(p => {
     const real = getTotalReal(p);
     const diff = real - p.stock;
-    let estadoCuadre = CUADRADO;
-    if (diff  0) estadoCuadre = SOBRANTE;
-    if (diff  0) estadoCuadre = FALTANTE;
+    let estadoCuadre = "CUADRADO";
+    if (diff > 0) estadoCuadre = "SOBRANTE";
+    if (diff < 0) estadoCuadre = "FALTANTE";
     
     return {
-      Código p.code,
-      Codigo alternativo p.alternateCode  '',
-      Artículo p.name,
-      Sub Familia p.cat,
-      Stock Teórico (Excel original) p.stock,
-      Conteo Percha p.percha,
-      Conteo Bodega p.bodega,
-      Total Físico Real real,
-      Diferencia Exacta diff,
-      Estado de Cuadre estadoCuadre,
-      Auditor Responsable p.countedBy  No reportado
+      "Código": p.code,
+      "Codigo alternativo": p.alternateCode || '',
+      "Artículo": p.name,
+      "Sub Familia": p.cat,
+      "Stock Teórico (Excel original)": p.stock,
+      "Conteo Percha": p.percha,
+      "Conteo Bodega": p.bodega,
+      "Total Físico Real": real,
+      "Diferencia Exacta": diff,
+      "Estado de Cuadre": estadoCuadre,
+      "Auditor Responsable": p.countedBy || "No reportado"
     };
   });
   
   const ws = XLSX.utils.json_to_sheet(reportData);
   const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, Inventario Total Contado);
+  XLSX.utils.book_append_sheet(wb, ws, "Inventario Total Contado");
   const fecha = new Date().toISOString().slice(0,10);
   XLSX.writeFile(wb, `Reporte_Auditoria_Completo_${fecha}.xlsx`);
 }
@@ -1006,18 +1115,18 @@ function exportAuditExcel() {
 function selectLocation(loc) {
   if(!currentEditingProduct) return;
   const oldLoc = document.getElementById('m-selected-loc').value;
-  currentEditingProduct[oldLoc] = Math.max(0, parseInt(document.getElementById('m-real').value)  0);
+  currentEditingProduct[oldLoc] = Math.max(0, parseInt(document.getElementById('m-real').value) || 0);
   document.getElementById('m-selected-loc').value = loc;
-  document.querySelectorAll('.loc-btn').forEach(b = b.classList.remove('active'));
+  document.querySelectorAll('.loc-btn').forEach(b => b.classList.remove('active'));
   
   if(loc === 'percha') {
     document.getElementById('loc-percha-btn').classList.add('active');
-    document.getElementById('input-qty-label').textContent = CANTIDAD EN PERCHA;
-    document.getElementById('m-real').value = currentEditingProduct.percha  '';
+    document.getElementById('input-qty-label').textContent = "CANTIDAD EN PERCHA";
+    document.getElementById('m-real').value = currentEditingProduct.percha || '';
   } else {
     document.getElementById('loc-bodega-btn').classList.add('active');
-    document.getElementById('input-qty-label').textContent = CANTIDAD EN BODEGA;
-    document.getElementById('m-real').value = currentEditingProduct.bodega  '';
+    document.getElementById('input-qty-label').textContent = "CANTIDAD EN BODEGA";
+    document.getElementById('m-real').value = currentEditingProduct.bodega || '';
   }
   updateModalSummaryPreview();
 }
@@ -1025,57 +1134,29 @@ function selectLocation(loc) {
 function updateModalSummaryPreview() {
   if(!currentEditingProduct) return;
   const loc = document.getElementById('m-selected-loc').value;
-  const val = Math.max(0, parseInt(document.getElementById('m-real').value)  0);
+  const val = Math.max(0, parseInt(document.getElementById('m-real').value) || 0);
   let p = currentEditingProduct.percha, b = currentEditingProduct.bodega;
   if(loc === 'percha') p = val; if(loc === 'bodega') b = val;
-  document.getElementById('modal-summary-preview').innerHTML = `Total Real b${p + b} udsb (Percha ${p}  Bodega ${b})`;
+  document.getElementById('modal-summary-preview').innerHTML = `Total Real: <b>${p + b} uds</b>`;
 }
 document.getElementById('m-real').addEventListener('input', updateModalSummaryPreview);
 
-function renderModalProductInfo(product) {
-  const el = document.getElementById('modal-product-info');
-  if (!el  !product) return;
-
-  const real = getTotalReal(product);
-  const diff = real - product.stock;
-  const productStatus = status(product);
-  const statusText = productStatus === 'ok'  'Cuadrado'  productStatus === 'low'  'Sobrante'  'Faltante';
-  const countedText = hasBeenCounted(product)  'Si'  'No';
-  const diffText = diff === 0  '0'  diff  0  `+${diff}`  String(diff);
-
-  el.style.display = 'block';
-  el.innerHTML = `
-    div style=font-weight700; color#0f172a; margin-bottom6px;Informacion del articulodiv
-    divbCodigob ${product.code  'Sin codigo'}div
-    ${product.alternateCode  `divbCodigo alternativob ${product.alternateCode}div`  ''}
-    divbArticulob ${product.name  'Sin nombre'}div
-    divbSub familiab ${product.cat  'GENERAL'}div
-    divbStock teoricob ${product.stock  0}div
-    divbPerchab ${product.percha  0}  bBodegab ${product.bodega  0}div
-    divbTotal contadob ${real}  bDiferenciab ${diffText}div
-    divbEstadob ${statusText}  bYa contadob ${countedText}div
-    divbAuditorb ${product.countedBy  'Sin registrar'}div
-  `;
-}
-
 function openAdd(){
-  currentEditingProduct = { percha 0, bodega 0, isCountedMarked true, alternateCode '' };
-  document.getElementById('modal-product-info').style.display = 'none';
-  document.getElementById('modal-product-info').innerHTML = '';
+  currentEditingProduct = { percha: 0, bodega: 0, isCountedMarked: true, alternateCode: '' };
   document.getElementById('m-id').value = '';
-  document.getElementById('m-code').value = currentCode  ''; document.getElementById('m-code').disabled = false;
+  document.getElementById('m-code').value = currentCode || ''; document.getElementById('m-code').disabled = false;
   document.getElementById('m-name').value = ''; document.getElementById('m-name').disabled = false;
   document.getElementById('m-stock').value = 0; document.getElementById('m-stock').disabled = false;
   document.getElementById('m-real').value = '';
   selectLocation('percha');
-  document.getElementById('modal-title').textContent = 'Registrar Producto Extra  Manual';
+  document.getElementById('modal-title').textContent = 'Registrar Producto Extra / Manual';
   document.getElementById('modal-wrap').style.display = 'flex';
+  requestAnimationFrame(() => document.getElementById('m-real').focus());
 }
 
 function openEditWithData(id) {
-  const p = products.find(x = x.id === id); if(!p) return;
+  const p = products.find(x => x.id === id); if(!p) return;
   currentEditingProduct = { ...p };
-  renderModalProductInfo(p);
   document.getElementById('m-id').value = p.id;
   document.getElementById('m-code').value = p.code;
   document.getElementById('m-name').value = p.name; document.getElementById('m-name').disabled = true;
@@ -1084,34 +1165,45 @@ function openEditWithData(id) {
   selectLocation('percha');
   document.getElementById('modal-title').textContent = p.name;
   document.getElementById('modal-wrap').style.display = 'flex';
+  requestAnimationFrame(() => document.getElementById('m-real').focus());
 }
 
 function closeModal(){ document.getElementById('modal-wrap').style.display='none'; currentCode = ''; }
 
 async function saveModal(e){
   e.preventDefault();
+  // Requerir usuario identificado
+  if (!currentUser) {
+    showNotification('❌ Identifícate antes de guardar', 'error', 4000);
+    return;
+  }
+
   const id = document.getElementById('m-id').value;
   const loc = document.getElementById('m-selected-loc').value;
-  currentEditingProduct[loc] = Math.max(0, parseInt(document.getElementById('m-real').value)  0);
+  currentEditingProduct[loc] = Math.max(0, parseInt(document.getElementById('m-real').value) || 0);
   
   if(id) {
-    const p = products.find(x = x.id == id);
+    const p = products.find(x => x.id == id);
     if(p) { 
       p.percha = currentEditingProduct.percha; 
       p.bodega = currentEditingProduct.bodega; 
       p.isCountedMarked = true;
       p.countedBy = currentUser;
-      p.updatedAt = Date.now();  Timestamp para tracking de cambios
+      p.updatedAt = Date.now(); // Timestamp para tracking de cambios
     }
   } else {
     const name = document.getElementById('m-name').value.trim();
-    const code = document.getElementById('m-code').value.trim()  'MAN-'+Date.now();
-    if(!name) return;
+    const code = document.getElementById('m-code').value.trim() || 'MAN-'+Date.now();
+    if(!name) {
+      showNotification('❌ Ingresa el nombre del artículo', 'error', 4000);
+      document.getElementById('m-name').focus();
+      return;
+    }
     products.push({ 
-      id nextId++, code, alternateCode '', name, cat 'GENERAL', stock 0, 
-      percha currentEditingProduct.percha, bodega currentEditingProduct.bodega, 
-      isCountedMarked true, countedBy currentUser,
-      updatedAt Date.now()  Timestamp para tracking de cambios
+      id: nextId++, code, alternateCode: '', name, cat: 'GENERAL', stock: 0, 
+      percha: currentEditingProduct.percha, bodega: currentEditingProduct.bodega, 
+      isCountedMarked: true, countedBy: currentUser,
+      updatedAt: Date.now() // Timestamp para tracking de cambios
     });
   }
   await saveToStorage(); closeModal(); updateStats(); renderTable();
@@ -1130,13 +1222,13 @@ async function startScanner(){
     ]);
     codeReader = new ZXing.BrowserMultiFormatReader(hints, 250);
     
-    await codeReader.decodeFromVideoDevice(undefined, 'scan-video', (result) = {
+    await codeReader.decodeFromVideoDevice(undefined, 'scan-video', (result) => {
       if(result){
         const code = String(result.getText()).trim();
         stopScanner();
-        const found = products.find(p = productMatchesCode(p, code));
+        const found = products.find(p => productMatchesCode(p, code));
         if(found) openEditWithData(found.id);
-        else alert(`El codigo escaneado no esta registrado en la base de datos ${code}`);
+        else alert(`El codigo escaneado no esta registrado en la base de datos: ${code}`);
       }
     });
   } catch(e) { alert('Asegúrate de conceder permisos a la cámara.'); stopScanner(); }
@@ -1152,57 +1244,57 @@ function importExcel(inp){
   const reader = new FileReader();
   reader.onload = async function(e){
     try{
-      const wb = XLSX.read(e.target.result, {type'array'});
-      const data = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], {defval'0', rawfalse});
+      const wb = XLSX.read(e.target.result, {type:'array'});
+      const data = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], {defval:'0', raw:false});
       
       products = [];
       recalculateNextId();
       const importTimestamp = Date.now();
       
-      data.forEach(row = {
+      data.forEach(row => {
         const name = getRowValue(row, ['Articulo', 'Artículo']);
         if(!name) return;
         
-        let rawStock = getRowValue(row, ['Stock Total', 'Stock'])  '0';
+        let rawStock = getRowValue(row, ['Stock Total', 'Stock']) || '0';
         rawStock = String(rawStock).replace(',', '.').trim(); 
-        const stock = Math.floor(parseFloat(rawStock))  0;
+        const stock = Math.floor(parseFloat(rawStock)) || 0;
         
-        let code = getRowValue(row, ['Codigo', 'Código'])  'REG-'+Math.floor(Math.random()100000);
+        let code = getRowValue(row, ['Codigo', 'Código']) || 'REG-'+Math.floor(Math.random()*100000);
         code = String(code).trim();
 
         let alternateCode = getRowValue(row, ['Codigo alternativo', 'Código alternativo', 'Cod Alternativo']);
-        alternateCode = String(alternateCode  '').trim();
+        alternateCode = String(alternateCode || '').trim();
         
-        const subFamilia = String(getRowValue(row, ['Sub Familia'])  'GENERAL').toUpperCase();
+        const subFamilia = String(getRowValue(row, ['Sub Familia']) || 'GENERAL').toUpperCase();
         
         products.push({ 
-          id nextId++, code, alternateCode, name, cat subFamilia, stock, percha 0, bodega 0, 
-          isCountedMarked false, countedBy '',
-          updatedAt importTimestamp  Timestamp consistente para importación
+          id: nextId++, code, alternateCode, name, cat: subFamilia, stock, percha: 0, bodega: 0, 
+          isCountedMarked: false, countedBy: '',
+          updatedAt: importTimestamp // Timestamp consistente para importación
         });
       });
       
       recalculateNextId();
       await saveToStorage(); updateStats(); renderTable(); showTab('inventario');
-      document.getElementById('import-msg').innerHTML = `p style=color#16a34a; font-size13px; font-weight600;✅ Éxito ${products.length} productos cargados correctamente.p`;
+      document.getElementById('import-msg').innerHTML = `<p style="color:#16a34a; font-size:13px; font-weight:600;">✅ Éxito: ${products.length} productos cargados correctamente.</p>`;
     }catch(err){ alert('Error al interpretar el archivo de Excel.'); }
   };
   reader.readAsArrayBuffer(file);
 }
 
 async function clearAuditor(){
-  if(confirm(¿Estás seguro de que deseas vaciar los registros actuales)){
+  if(confirm("¿Estás seguro de que deseas vaciar los registros actuales?")){
     products = []; localStorage.removeItem('audit_droid_v2');
     recalculateNextId();
     try {
       if (window.clearProductsFromFirebase) {
         await window.clearProductsFromFirebase(currentUser);
       } else {
-        console.warn(Firebase todavia no esta inicializado. Solo se limpio localStorage.);
+        console.warn("Firebase todavia no esta inicializado. Solo se limpio localStorage.");
       }
     } catch (error) {
-      console.error(Error al limpiar Firebase, error);
-      alert(No se pudo limpiar Firebase. Revisa la consola del navegador.);
+      console.error("Error al limpiar Firebase:", error);
+      alert("No se pudo limpiar Firebase. Revisa la consola del navegador.");
     }
     activeCategory = ''; activeProgress = ''; activeAudit = '';
     updateStats(); renderTable();
@@ -1211,7 +1303,7 @@ async function clearAuditor(){
 }
 
 async function initializeAppData() {
-  console.log(Inicializando datos de la app...);
+  console.log("Inicializando datos de la app...");
   recalculateNextId();
 
   try {
@@ -1219,13 +1311,13 @@ async function initializeAppData() {
     if (window.firebaseAuthReady) {
       firebaseUser = await Promise.race([
         window.firebaseAuthReady,
-        new Promise(resolve = setTimeout(() = resolve(null), 5000))
+        new Promise(resolve => setTimeout(() => resolve(null), 5000))
       ]);
 
       if (firebaseUser) {
-        console.log(Autenticacion Firebase lista antes de cargar datos. UID, firebaseUser.uid);
+        console.log("Autenticacion Firebase lista antes de cargar datos. UID:", firebaseUser.uid);
       } else {
-        console.warn(Firebase Auth no respondio a tiempo. Se usara localStorage.);
+        console.warn("Firebase Auth no respondio a tiempo. Se usara localStorage.");
       }
     }
 
@@ -1235,27 +1327,27 @@ async function initializeAppData() {
         products = firebaseProducts;
         localStorage.setItem('audit_droid_v2', JSON.stringify(products));
         recalculateNextId();
-        console.log(Productos cargados desde Firebase, products.length);
+        console.log("Productos cargados desde Firebase:", products.length);
       }
     } else {
-      console.warn(Firebase no esta disponible. Se usara localStorage.);
+      console.warn("Firebase no esta disponible. Se usara localStorage.");
     }
   } catch (error) {
-    console.warn(No se pudo cargar desde Firebase. Se usara localStorage., error);
+    console.warn("No se pudo cargar desde Firebase. Se usara localStorage.", error);
   }
 
   checkAuth();
   
-   Configurar listener en tiempo real si está disponible y el usuario está autenticado
-  setTimeout(() = {
+  // Configurar listener en tiempo real si está disponible y el usuario está autenticado
+  setTimeout(() => {
     if (currentUser && window.setupRealtimeListener) {
-      console.log(Configurando listener en tiempo real...);
+      console.log("Configurando listener en tiempo real...");
       window.setupRealtimeListener();
     }
   }, 1000);
 }
 
 initializeAppData();
-script
-body
-html
+</script>
+</body>
+</html>
